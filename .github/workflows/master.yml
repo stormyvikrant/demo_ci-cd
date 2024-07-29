@@ -1,37 +1,34 @@
-name: CI/CD Pipeline
+name: CI/CD angular
 
 on:
   push:
     branches:
-      - master
+      - master  
   pull_request:
     branches:
-      - maser
+      - master  
 
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+    - name: Checkout code
+      uses: actions/checkout@v2
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '20'  # Adjust based on your requirements
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '20.13.0'
 
-      - name: Install dependencies
-        run: npm install
+    - name: Install dependencies
+      run: npm install
 
-      - name: Run tests
-        run: npm run test -- --watch=false
+    - name: Build the project
+      run: npm run build --prod
 
-      - name: Build project
-        run: npm run build -- --prod
-
-      - name: Deploy to Server (Optional)
-        run: |
-          echo "Deploying to server..."
-          # Add your deployment commands here, for example:
-          # npm install -g firebase-tools
-          # firebase deploy --only hosting
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.TOKEN }}
+        publish_dir: ./dist/my-angular-app  # Adjust the path if necessary
