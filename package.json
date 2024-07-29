@@ -2,12 +2,14 @@
   "name": "demo-project-ci-cd",
   "version": "0.0.0",
   "scripts": {
-    "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
-    "watch": "ng build --watch --configuration development",
-    "test": "ng test"
-  },
+  "ng": "ng",
+  "start": "ng serve",
+  "clean": "rimraf dist",
+  "build": "npm run clean && ng build --configuration=production",
+  "watch": "ng build --watch --configuration development",
+  "test": "ng test"
+},
+
   "private": true,
   "dependencies": {
     "@angular/animations": "^15.2.0",
